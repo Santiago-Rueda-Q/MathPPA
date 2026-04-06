@@ -171,5 +171,51 @@ export const styles = StyleSheet.create({
   quizInputActive: {
     borderColor: theme.colors.primary,
     borderWidth: 1.5,
-  }
+  },
+  quizStep: {
+    backgroundColor: '#0D0D0D',
+    padding: 15,
+    borderRadius: 16,
+    borderWidth: 1,
+    borderColor: '#222',
+    marginBottom: 15,
+    opacity: 0.5,
+  },
+  quizStepDone: {
+    borderColor: theme.colors.primary + '40',
+    backgroundColor: theme.colors.primary + '08',
+    opacity: 1,
+  },
+  stepTitle: {
+    color: theme.colors.primary,
+    fontWeight: '900',
+    fontSize: 13,
+    marginBottom: 12,
+    textTransform: 'uppercase',
+  },
+  stepInputRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 10,
+  },
+  stepLabel: {
+    color: '#888',
+    fontWeight: 'bold',
+    fontSize: 14,
+  },
+  checkBtn: {
+    backgroundColor: theme.colors.primary,
+    width: 40,
+    height: 40,
+    borderRadius: 8,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginLeft: 5,
+  },
+  successText: {
+    color: theme.colors.primary,
+    fontSize: 12,
+    fontWeight: '700',
+    marginTop: 8,
+  },
 });

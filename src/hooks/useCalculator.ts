@@ -99,6 +99,18 @@ export const useCalculator = () => {
     
     try {
       const { expression, a, b, n, method } = state;
+      
+      // Deep sanitize expression for mathjs
+      const sanitizedExpr = expression
+        .replace(/sen\(/g, 'sin(')     // Handle Spanish Seno
+        .replace(/sen \(/g, 'sin(') 
+        .replace(/\^{([^}]*)}/g, '^($1)') // LaTeX exponent to mathjs
+        .replace(/\\pi/g, 'pi')
+        .replace(/\\cdot/g, '*')
+        .replace(/\\div/g, '/')
+        .replace(/e\^{/g, 'exp(') // Optimization for e^{x} -> exp(x)
+        .replace(/}/g, ')');       // Secondary catch for braces
+
       const numA = parseFloat(a);
       const numB = parseFloat(b);
       const numN = parseInt(n);
@@ -111,13 +123,13 @@ export const useCalculator = () => {
 
       switch (method) {
         case 'trapecio':
-          result = calculateTrapecio(expression, numA, numB, numN);
+          result = calculateTrapecio(sanitizedExpr, numA, numB, numN);
           break;
         case 'simpson':
-          result = calculateSimpson(expression, numA, numB, numN);
+          result = calculateSimpson(sanitizedExpr, numA, numB, numN);
           break;
         case 'romberg':
-          result = calculateRomberg(expression, numA, numB, numN);
+          result = calculateRomberg(sanitizedExpr, numA, numB, numN);
           break;
         default:
           throw new Error('Método no soportado');
