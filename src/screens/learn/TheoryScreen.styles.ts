@@ -9,6 +9,7 @@ export const styles = StyleSheet.create({
   scroll: {
     padding: theme.spacing.lg,
     paddingTop: 60,
+    paddingBottom: 120,
   },
   subtitle: {
     fontSize: 16,

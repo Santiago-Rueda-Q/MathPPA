@@ -9,7 +9,7 @@ import LatexRenderer from '../../components/latex/LatexRenderer';
 import AreaGraph from '../../components/graph/AreaGraph';
 import { styles } from './CalculatorScreen.styles';
 
-export default function CalculatorScreen() {
+export default function CalculatorScreen({ route }: any) {
   const [showKeyboard, setShowKeyboard] = useState(false);
 
   const { 
@@ -17,6 +17,20 @@ export default function CalculatorScreen() {
     setExpression, setA, setB, setN, setMethod, calculate, reset,
     insertAtCursor, moveCursor, deleteAtCursor
   } = useCalculator();
+
+  React.useEffect(() => {
+    if (route.params?.exercise) {
+      const { exercise, method: mId } = route.params;
+      setExpression(exercise.expression);
+      setA(exercise.a.toString());
+      setB(exercise.b.toString());
+      setN(exercise.n.toString());
+      if (mId) setMethod(mId);
+      
+      // Clear keyboard if active
+      setShowKeyboard(false);
+    }
+  }, [route.params]);
 
   const handleKeyPress = (val: string) => {
     insertAtCursor(val);
@@ -114,6 +128,7 @@ export default function CalculatorScreen() {
                expression={result.expression} 
                a={result.bounds.a} 
                b={result.bounds.b} 
+               n={result.iterations}
             />
 
             <View style={styles.divider} />

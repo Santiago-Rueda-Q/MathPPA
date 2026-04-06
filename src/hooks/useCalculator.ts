@@ -62,7 +62,6 @@ export const useCalculator = () => {
     setState(prev => {
       let newPos = prev.cursorPosition + (dir === 'left' ? -1 : 1);
       
-      // Skip over closing syntax if moving right from inside ^{} or ()
       if (dir === 'right') {
          const nextChar = prev.expression[prev.cursorPosition];
          if (['}', ')'].includes(nextChar)) {

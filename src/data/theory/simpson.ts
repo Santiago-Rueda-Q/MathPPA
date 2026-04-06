@@ -5,42 +5,45 @@ export const simpsonTheory: MethodTheory = {
   name: 'Regla de Simpson 1/3',
   levels: [
     {
-      title: '🧠 NIVEL 1 — IDEA FUNDAMENTAL',
-      subTitle: '🔍 ¿Qué mejora Simpson?',
+      title: 'NIVEL 1 — IDEA FUNDAMENTAL',
+      subTitle: '¿Qué mejora Simpson?',
       items: [
-        { type: 'text', content: 'Mientras el método del trapecio usa rectas (interpolación lineal), Simpson usa:' },
-        { type: 'point', content: 'Parábolas (interpolación cuadrática)', icon: 'chart-bell-curve' },
-        { type: 'tip', content: 'Esto permite un mejor ajuste a la curva y un error mucho menor.', icon: 'lightbulb-on-outline' },
-        { type: 'text', content: 'Resuelve el problema de integrar funciones difíciles analíticamente con alta precisión.' }
+        { type: 'text', content: 'Mientras que el método del trapecio usa rectas (interpolación lineal), Simpson usa:' },
+        { type: 'point', content: 'Parábolas (Interpolación cuadrática)', icon: 'chart-bell-curve' },
+        { type: 'tip', content: 'Esto permite un mejor ajuste a la curva y un error mucho menor.', icon: 'trending-up' },
+        { type: 'text', content: 'Objetivo: Aproximar la integral cuando no se puede integrar fácilmente o se requiere alta precisión.' },
+        { type: 'latex', content: '\\int_a^b f(x) \\, dx' }
       ]
     },
     {
-      title: '📘 NIVEL 2 — BASE MATEMÁTICA',
+      title: 'NIVEL 2 — BASE MATEMÁTICA',
       items: [
-        { type: 'text', content: 'Aproximamos la función como un polinomio de grado 2 entre tres puntos consecutivos:' },
+        { type: 'text', content: 'Simpson aproxima la función como un polinomio de grado 2 en cada subintervalo:' },
         { type: 'latex', content: 'f(x) \\approx ax^2 + bx + c' },
-        { type: 'point', content: 'Usamos arcos parabólicos en lugar de segmentos de recta.', icon: 'axis-arrow' }
+        { type: 'point', content: 'Usa tres puntos consecutivos: x₀, x₁, x₂.', icon: 'dots-horizontal' },
+        { type: 'text', content: 'Idea clave: En lugar de trapecios, usamos arcos parabólicos.' }
       ]
     },
     {
-      title: '📐 NIVEL 3 — FÓRMULA DE SIMPSON 1/3',
+      title: 'NIVEL 3 — FÓRMULA DE SIMPSON 1/3',
+      subTitle: 'Estructura compuesta',
       items: [
-        { type: 'latex', content: 'I \\approx \\frac{h}{3} [f(x_0) + f(x_n) + 4\\sum_{i\\text{ impar}} f(x_i) + 2\\sum_{i\\text{ par}} f(x_i)]' },
-        { type: 'point', content: 'n debe ser par.', icon: 'numeric-2-box-multiple-outline' },
-        { type: 'text', content: 'Pesos optimizados:' },
-        { type: 'point', content: 'Extremos: peso 1 | Impares: peso 4 | Pares: peso 2', icon: 'weight-kilogram' }
+        { type: 'latex', content: 'I \\approx \\frac{h}{3} [f(x_0) + f(x_n) + 4\\sum_{i \\in imp} f(x_i) + 2\\sum_{j \\in par} f(x_j)]' },
+        { type: 'warning', content: 'Requisito crítico: El número de intervalos (n) DEBE SER PAR.', icon: 'alert-circle' },
+        { type: 'point', content: 'Puntos impares: Multiplicados por 4.', icon: 'numeric-4-box' },
+        { type: 'point', content: 'Puntos pares: Multiplicados por 2.', icon: 'numeric-2-box' }
       ]
     },
     {
-      title: '⚙️ NIVEL 4 — DERIVACIÓN CONCEPTUAL',
+      title: 'NIVEL 4 — ANALISIS DEL ERROR',
       items: [
-        { type: 'text', content: 'Simpson proviene de integrar el polinomio interpolante de Lagrange de tres puntos.' },
-        { type: 'point', content: 'El error es de orden O(h⁴), mucho mejor que el Trapecio O(h²).', icon: 'math-compass' },
-        { type: 'latex', content: 'E = -\\frac{(b - a)^5}{180n^4} f^{(4)}(\\xi)' }
+        { type: 'text', content: 'El error de Simpson es significativamente menor que en el trapecio:' },
+        { type: 'latex', content: 'E = -\\frac{(b-a)^5}{180n^4} f^{(4)}(\\xi)' },
+        { type: 'tip', content: 'El error disminuye proporcionalmente a 1/n⁴. ¡Es extremadamente rápido!', icon: 'flash' }
       ]
     },
     {
-      title: '🧪 NIVEL 5 — EJEMPLOS RESUELTOS',
+      title: 'NIVEL 5 — EJEMPLOS RESUELTOS',
       items: [
         { type: 'text', content: 'Ejemplo: ∫ x² dx de 0 a 2 con n=2' },
         { type: 'point', content: 'h = 1 | x0=0, x1=1, x2=2', icon: 'numeric-1-circle-outline' },
@@ -52,14 +55,14 @@ export const simpsonTheory: MethodTheory = {
       ]
     },
     {
-      title: '🧠 NIVEL 6 — INTERPRETACIÓN PROFUNDA',
+      title: 'NIVEL 6 — INTERPRETACIÓN PROFUNDA',
       items: [
         { type: 'point', content: 'Captura la curvatura (segunda derivada) de la función.', icon: 'sine-wave' },
         { type: 'text', content: 'Simpson incluye términos hasta grado 3 en la expansión de Taylor.' }
       ]
     },
     {
-      title: '⚖️ NIVEL 7 — COMPARACIÓN DIRECTA',
+      title: 'NIVEL 7 — COMPARACIÓN DIRECTA',
       items: [
         { type: 'point', content: 'Trapecio (Lineal): O(h²)', icon: 'align-vertical-bottom' },
         { type: 'point', content: 'Simpson (Cuadrática): O(h⁴)', icon: 'align-vertical-top' },
@@ -67,7 +70,7 @@ export const simpsonTheory: MethodTheory = {
       ]
     },
     {
-      title: '❓ NIVEL 8 — DUDAS CLAVE',
+      title: 'NIVEL 8 — DUDAS CLAVE',
       items: [
         { type: 'text', content: '¿Por qué n debe ser par?' },
         { type: 'point', content: 'Porque trabaja con pares de intervalos (3 puntos necesarios para una parábola).', icon: 'help-circle-outline' },
@@ -76,7 +79,7 @@ export const simpsonTheory: MethodTheory = {
       ]
     },
     {
-      title: '⚠️ NIVEL 9 — ERRORES COMUNES',
+      title: 'NIVEL 9 — ERRORES COMUNES',
       items: [
         { type: 'warning', content: 'Usar n impar.', icon: 'alert-octagon' },
         { type: 'warning', content: 'Confundir los pesos (4 y 2).', icon: 'alert-octagon' },

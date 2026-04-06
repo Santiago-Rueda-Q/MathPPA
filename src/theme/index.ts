@@ -1,10 +1,10 @@
 export const theme = {
   colors: {
-    primary: '#0F6E56', // Emerald Green
-    secondary: '#185FA5', // Deep Blue
-    accent: '#BA7517', // Golden Orange
-    background: '#121212', // Deep Neutral
-    surface: '#1E1E1E', // Slightly lighter neutral
+    primary: '#0F6E56', 
+    secondary: '#185FA5', 
+    accent: '#BA7517', 
+    background: '#121212', 
+    surface: '#1E1E1E', 
     glass: 'rgba(255, 255, 255, 0.08)',
     text: {
       primary: '#FFFFFF',
