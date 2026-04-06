@@ -18,13 +18,19 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/logo.png",
         "backgroundColor": "#121212"
-      }
+      },
+      "package": "com.deicida.PPA"
     },
     "web": {
       "favicon": "./assets/favicon.png"
     },
     "plugins": [
       "expo-font"
-    ]
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "7f5ddd84-137d-4f32-b57a-a9220e6a0b81"
+      }
+    }
   }
 }
