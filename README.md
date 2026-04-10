@@ -1,11 +1,11 @@
-# 🧮 SimuMath — Plataforma de Simulación y Aprendizaje de Métodos Numéricos
+# 🧮 SimuMath — Plataforma de Apoyo de Estudio de Ingeniería de Software FESC
 
 <p align="center">
   <img src="assets/images/logo.png" width="100" alt="SimuMath Logo" />
 </p>
 
 <p align="center">
-  <strong>Aprende. Practica. Domina los métodos numéricos de integración.</strong><br/>
+  <strong>Aprende. Practica. Domina tu proceso en la Ingeniería de Software FESC.</strong><br/>
   Una aplicación móvil interactiva construida con React Native + Expo.
 </p>
 
@@ -38,7 +38,7 @@
 
 ## 📱 Descripción del Proyecto
 
-**SimuMath** es una plataforma educativa gamificada para el aprendizaje de **métodos numéricos de integración**. Permite a los estudiantes:
+**SimuMath** es una plataforma educativa gamificada diseñada como **apoyo de estudio para el programa de Ingeniería de Software de la FESC**. Permite a los estudiantes:
 
 - 📖 **Aprender** los fundamentos teóricos de Trapecio, Simpson 1/3 y Romberg con fórmulas LaTeX interactivas
 - 🎯 **Practicar** a través de una ruta de 10 niveles con verificación paso a paso
@@ -495,6 +495,6 @@ Desarrollado por **Santiago Rueda Q**.
 ---
 
 <p align="center">
-  Hecho con ❤️ para los estudiantes de ingeniería numérica.<br/>
-  <sub>© 2026 SimuMath – Plataforma de Simulación y Métodos Numéricos</sub>
+  Hecho con ❤️ para los estudiantes de Ingeniería de Software de la FESC.<br/>
+  <sub>© 2026 SimuMath – Plataforma de Apoyo de Estudio</sub>
 </p>
