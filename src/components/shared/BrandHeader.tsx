@@ -1,49 +1,20 @@
 import React from 'react';
-import { View, Image, StyleSheet, Text } from 'react-native';
-import { theme } from '../../theme';
+import { View, Image, Text } from 'react-native';
+import { styles } from './BrandHeader.styles';
+import { BRAND_CONFIG } from './config/brand.config';
 
 export default function BrandHeader() {
   return (
     <View style={styles.container}>
       <Image 
-        source={require('../../../assets/images/logo.png')} 
+        source={BRAND_CONFIG.logoPath} 
         style={styles.logo}
         resizeMode="contain"
       />
       <View style={styles.textContainer}>
-        <Text style={styles.appName}>PPA</Text>
-        <Text style={styles.tagline}>Matemáticas Interactivas</Text>
+        <Text style={styles.appName}>{BRAND_CONFIG.appName}</Text>
+        <Text style={styles.tagline}>{BRAND_CONFIG.tagline}</Text>
       </View>
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginBottom: theme.spacing.lg,
-    marginTop: 10,
-  },
-  logo: {
-    width: 50,
-    height: 50,
-    borderRadius: 12,
-    backgroundColor: theme.colors.glass,
-  },
-  textContainer: {
-    marginLeft: theme.spacing.md,
-  },
-  appName: {
-    fontSize: 22,
-    fontWeight: '900',
-    color: theme.colors.text.primary,
-    letterSpacing: 1,
-  },
-  tagline: {
-    fontSize: 12,
-    color: theme.colors.primary,
-    fontWeight: '700',
-    textTransform: 'uppercase',
-  },
-});

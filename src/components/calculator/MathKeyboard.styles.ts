@@ -6,10 +6,10 @@ const BUTTON_WIDTH = (width - 40) / 5;
 
 export const styles = StyleSheet.create({
   container: {
-    backgroundColor: '#1E1E1E',
+    backgroundColor: theme.colors.grey[750],
     padding: theme.spacing.sm,
     borderTopWidth: 1,
-    borderTopColor: '#333',
+    borderTopColor: theme.colors.grey[500],
     ...Platform.select({
       ios: { paddingBottom: 35 },
       android: { paddingBottom: 15 },
@@ -17,12 +17,12 @@ export const styles = StyleSheet.create({
     })
   },
   previewContainer: {
-    backgroundColor: '#252525',
+    backgroundColor: theme.colors.grey[650],
     marginBottom: theme.spacing.sm,
     padding: theme.spacing.sm,
     borderRadius: 8,
     borderWidth: 1,
-    borderColor: '#333',
+    borderColor: theme.colors.grey[500],
     minHeight: 80,
     justifyContent: 'center',
   },
@@ -46,35 +46,35 @@ export const styles = StyleSheet.create({
   button: {
     width: BUTTON_WIDTH - 6,
     height: 48,
-    backgroundColor: '#333',
+    backgroundColor: theme.colors.grey[500],
     borderRadius: 6,
     justifyContent: 'center',
     alignItems: 'center',
     marginVertical: 3,
   },
   buttonText: {
-    color: '#fff',
+    color: theme.colors.text.primary,
     fontSize: 16,
     fontWeight: '600',
   },
   numButton: {
-    backgroundColor: '#E0E0E0',
+    backgroundColor: theme.colors.grey[50],
   },
   numText: {
-    color: '#333',
+    color: theme.colors.grey[500],
     fontWeight: '700',
   },
   opButton: {
-    backgroundColor: '#424242',
+    backgroundColor: theme.colors.grey[400],
   },
   delButton: {
-    backgroundColor: '#FFB300', // Yellow/Gold
+    backgroundColor: theme.colors.warning,
   },
   acButton: {
-    backgroundColor: '#E53935', // Red
+    backgroundColor: theme.colors.error,
   },
   equalButton: {
-    backgroundColor: '#1E88E5', // Blue
+    backgroundColor: theme.colors.info,
   },
   fullWidthButton: {
     width: '100%',

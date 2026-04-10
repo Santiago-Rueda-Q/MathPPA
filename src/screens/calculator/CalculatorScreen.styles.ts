@@ -14,7 +14,7 @@ export const styles = StyleSheet.create({
   scroll: {
     padding: theme.spacing.lg,
     paddingTop: 60,
-    paddingBottom: 120, // Space for Bottom TabBar
+    paddingBottom: 120, 
   },
   subtitle: {
     fontSize: 16,
@@ -99,7 +99,7 @@ export const styles = StyleSheet.create({
     fontWeight: '600',
   },
   methodTextActive: {
-    color: '#fff',
+    color: theme.colors.text.primary,
   },
   calcBtn: {
     backgroundColor: theme.colors.primary,
@@ -108,7 +108,7 @@ export const styles = StyleSheet.create({
     alignItems: 'center',
   },
   calcBtnText: {
-    color: '#fff',
+    color: theme.colors.text.primary,
     fontSize: 18,
     fontWeight: '700',
   },

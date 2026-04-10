@@ -29,7 +29,7 @@ export const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    backgroundColor: '#1A1A1A',
+    backgroundColor: theme.colors.grey[800],
   },
   methodTitle: {
     fontSize: 20,
@@ -52,7 +52,7 @@ export const styles = StyleSheet.create({
   },
   diamondIcon: {
     transform: [{ rotate: '-45deg' }],
-    color: '#fff',
+    color: theme.colors.text.primary,
     fontSize: 20,
     fontWeight: '900',
   },
@@ -60,7 +60,7 @@ export const styles = StyleSheet.create({
     padding: theme.spacing.lg,
     backgroundColor: theme.colors.surface,
     borderTopWidth: 1,
-    borderTopColor: '#333',
+    borderTopColor: theme.colors.grey[500],
   },
   levelSection: {
     marginBottom: theme.spacing.xl,
@@ -68,14 +68,14 @@ export const styles = StyleSheet.create({
   levelHeader: {
     fontSize: 14,
     fontWeight: '900',
-    color: '#FFB300', // Gold/Warning color for level header
+    color: theme.colors.warning, // Gold/Warning color for level header
     marginBottom: theme.spacing.xs,
     textTransform: 'uppercase',
   },
   levelSubTitle: {
      fontSize: 16,
      fontWeight: '800',
-     color: '#FFFFFF',
+     color: theme.colors.text.primary,
      marginBottom: theme.spacing.md,
      backgroundColor: theme.colors.glass,
      padding: 8,

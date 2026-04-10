@@ -1,21 +1,18 @@
 export type Method = 'trapecio' | 'simpson' | 'romberg';
 
+export interface CalculationStep {
+  title: string;
+  content: string;
+  latex?: string;
+}
+
 export interface CalculationResult {
   value: number;
   steps: CalculationStep[];
   method: Method;
   expression: string;
-  bounds: {
-    a: number;
-    b: number;
-  };
+  bounds: { a: number; b: number };
   iterations?: number;
-}
-
-export interface CalculationStep {
-  title: string;
-  content: string;
-  latex?: string;
 }
 
 export interface CalculatorState {

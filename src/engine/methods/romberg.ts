@@ -1,5 +1,6 @@
 import { evaluate } from 'mathjs';
 import { CalculationResult, CalculationStep } from '../../types';
+import { highlightTex } from '../utils/latexFormatter';
 
 export const calculateRomberg = (
   expression: string,
@@ -21,7 +22,7 @@ export const calculateRomberg = (
       steps.push({
         title: `Paso 1: Primera aproximación (n=1, h=${h.toFixed(4)})`,
         content: `R[0,0] = (h/2) * [f(a)+f(b)]`,
-        latex: `R[0,0] = \\frac{h}{2} [f(a) + f(b)] = \\textcolor{#10B981}{\\frac{${h.toFixed(6)}}{2} [${f(a).toFixed(4)} + ${f(b).toFixed(4)}]} = ${R[0][0].toFixed(6)}`,
+        latex: `R[0,0] = \\frac{h}{2} [f(a) + f(b)] = ${highlightTex(`\\frac{${h.toFixed(6)}}{2} [${f(a).toFixed(4)} + ${f(b).toFixed(4)}]`)} = ${R[0][0].toFixed(6)}`,
       });
     } else {
       let sum = 0;
@@ -33,7 +34,7 @@ export const calculateRomberg = (
       steps.push({
         title: `Paso ${i + 1}: Refinamiento del trapecio (n=${n}, h=${h.toFixed(6)})`,
         content: `R[${i},0] = 0.5 * R[${i-1},0] + h * Σf(points)`,
-        latex: `R[${i},0] = 0.5 R[${i-1},0] + h \\sum_{k=1}^{2^{i-1}} f(a + (2k-1)h) = \\textcolor{#10B981}{0.5(${R[i-1][0].toFixed(6)}) + ${h.toFixed(6)}(${sum.toFixed(6)})} = ${R[i][0].toFixed(6)}`,
+        latex: `R[${i},0] = 0.5 R[${i-1},0] + h \\sum_{k=1}^{2^{i-1}} f(a + (2k-1)h) = ${highlightTex(`0.5(${R[i-1][0].toFixed(6)}) + ${h.toFixed(6)}(${sum.toFixed(6)})`)} = ${R[i][0].toFixed(6)}`,
       });
 
       for (let j = 1; j <= i; j++) {
@@ -42,7 +43,7 @@ export const calculateRomberg = (
         steps.push({
           title: `Paso ${i + 1}.${j}: Extrapolación de Richardson (Columna ${j})`,
           content: `Refinando el nivel ${i}...`,
-          latex: `R_{${i},${j}} = R_{i,j-1} + \\frac{R_{i,j-1} - R_{i-1,j-1}}{4^j - 1} = \\textcolor{#10B981}{${R[i][j-1].toFixed(6)} + \\frac{${R[i][j-1].toFixed(6)} - ${R[i-1][j-1].toFixed(6)}}{4^${j} - 1}} = ${R[i][j].toFixed(6)}`,
+          latex: `R_{${i},${j}} = R_{i,j-1} + \\frac{R_{i,j-1} - R_{i-1,j-1}}{4^j - 1} = ${highlightTex(`${R[i][j-1].toFixed(6)} + \\frac{${R[i][j-1].toFixed(6)} - ${R[i-1][j-1].toFixed(6)}}{4^${j} - 1}`)} = ${R[i][j].toFixed(6)}`,
         });
       }
     }

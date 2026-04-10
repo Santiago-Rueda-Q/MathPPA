@@ -1,16 +1,17 @@
 import React from 'react';
-import { StyleSheet, View } from 'react-native';
+import { View } from 'react-native';
 import katex from 'katex';
 import 'katex/dist/katex.min.css';
+import { LatexRendererProps } from './LatexRenderer.types';
+import { styles } from './LatexRenderer.styles';
+import { theme } from '../../theme';
 
-interface Props {
-  latex: string;
-  fontSize?: number;
-  color?: string;
-  center?: boolean;
-}
-
-export default function LatexRenderer({ latex, fontSize = 16, color = '#FFFFFF', center = false }: Props) {
+export default function LatexRenderer({ 
+  latex, 
+  fontSize = 16, 
+  color = theme.colors.text.primary, 
+  center = false 
+}: LatexRendererProps) {
   return (
     <View style={[styles.webContainer, { justifyContent: center ? 'center' : 'flex-start' }]}>
       <div 
@@ -30,10 +31,3 @@ export default function LatexRenderer({ latex, fontSize = 16, color = '#FFFFFF',
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  webContainer: {
-    width: '100%',
-    paddingVertical: 5,
-  }
-});

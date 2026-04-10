@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "PPA",
-    "slug": "PPA",
+    "name": "SimuMath",
+    "slug": "SimuMath",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/logo.png",
@@ -19,7 +19,7 @@
         "foregroundImage": "./assets/images/logo.png",
         "backgroundColor": "#121212"
       },
-      "package": "com.deicida.PPA"
+      "package": "com.deicida.SimuMath"
     },
     "web": {
       "favicon": "./assets/favicon.png"
