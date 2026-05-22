@@ -34,10 +34,16 @@ export const useCalculator = () => {
       if (isNaN(numA) || isNaN(numB) || isNaN(numN))
         throw new Error('Por favor ingresa números válidos');
 
+      let effectiveN = numN;
+      if (method === 'romberg' && numN > 10) {
+        setError('Romberg: el número de niveles se ha limitado a 10 para evitar cálculos excesivos.');
+        effectiveN = 10;
+      }
+
       const executor = METHOD_MAP[method];
       if (!executor) throw new Error('Método no soportado');
 
-      setResult(executor(sanitizeExpression(expression.expression), numA, numB, numN));
+      setResult(executor(sanitizeExpression(expression.expression), numA, numB, effectiveN));
     } catch (err: any) {
       setError(err.message);
     } finally {

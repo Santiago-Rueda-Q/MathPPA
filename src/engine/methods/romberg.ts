@@ -2,17 +2,20 @@ import { evaluate } from 'mathjs';
 import { CalculationResult, CalculationStep } from '../../types';
 import { highlightTex } from '../utils/latexFormatter';
 
+const MAX_ROMBERG_LEVELS = 10;
+
 export const calculateRomberg = (
   expression: string,
   a: number,
   b: number,
   maxIterations: number = 5
 ): CalculationResult => {
+  const levels = Math.min(Math.max(1, maxIterations), MAX_ROMBERG_LEVELS);
   const steps: CalculationStep[] = [];
   const R: number[][] = [];
   const f = (x: number) => evaluate(expression, { x });
 
-  for (let i = 0; i < maxIterations; i++) {
+  for (let i = 0; i < levels; i++) {
     R[i] = [];
     const n = Math.pow(2, i);
     const h = (b - a) / n;
@@ -49,7 +52,7 @@ export const calculateRomberg = (
     }
   }
 
-  const resultValue = R[maxIterations - 1][maxIterations - 1];
+  const resultValue = R[levels - 1][levels - 1];
 
   return {
     value: resultValue,
@@ -57,6 +60,6 @@ export const calculateRomberg = (
     method: 'romberg',
     expression,
     bounds: { a, b },
-    iterations: maxIterations,
+    iterations: levels,
   };
 };

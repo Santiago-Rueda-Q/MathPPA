@@ -43,6 +43,7 @@ export default function TutorScreen({ navigation }: any) {
             updateInput={quiz.updateInput}
             validateStep={quiz.validateStep}
             onGoToSolve={goToSolve}
+            methodId={selectedMethod.id}
           />
         )}
       </ScrollView>

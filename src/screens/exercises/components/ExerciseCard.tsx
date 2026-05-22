@@ -35,15 +35,22 @@ interface Props {
   isStepWrong: boolean[];
   stepInputs: { h: string; fa: string; fb: string; sum: string; result: string };
   updateInput: (key: any, val: string, step: number) => void;
-  validateStep: (n: number, answers: Answers) => void;
+  validateStep: (n: number, answers: Answers, methodId: string) => void;
   onGoToSolve: () => void;
+  methodId: string;
 }
 
 export default function ExerciseCard({
   exercise, answers, activeStep,
   isStepCorrect, isStepWrong, stepInputs,
-  updateInput, validateStep, onGoToSolve,
+  updateInput, validateStep, onGoToSolve, methodId,
 }: Props) {
+  const isRomberg = methodId === 'romberg';
+
+  const step1Title = isRomberg ? 'PASO 1: Primera aproximación R[0,0]' : 'PASO 1: Calcular h (tamaño del paso)';
+  const step2Title = isRomberg ? 'PASO 2: Segunda aproximación R[1,0]' : 'PASO 2: Evaluar extremos';
+  const step3Title = isRomberg ? 'PASO 3: Extrapolación de Richardson R[1,1]' : 'PASO 3: Suma de puntos intermedios';
+  const step3Label = isRomberg ? 'R[1,1] = ' : 'Σ f(xᵢ) = ';
   return (
     <View style={styles.exerciseCard}>
       {/* Progress bar */}
@@ -71,17 +78,17 @@ export default function ExerciseCard({
 
       <View style={{ marginTop: 10 }}>
         <QuizStep
-          stepNum={1} title="PASO 1: Calcular h (tamaño del paso)"
+          stepNum={1} title={step1Title}
           visible={activeStep >= 1}
           isCorrect={isStepCorrect[1]} isWrong={isStepWrong[1]}
           successText={`¡Correcto! h = ${answers.h.toFixed(2)}`}
           errorText="¡Valor incorrecto! Revisa la fórmula h=(b-a)/n"
           inputs={[{ label: 'h = ', value: stepInputs.h, placeholder: '0.00', onChange: v => updateInput('h', v, 1) }]}
-          onValidate={() => validateStep(1, answers)}
+          onValidate={() => validateStep(1, answers, methodId)}
         />
 
         <QuizStep
-          stepNum={2} title="PASO 2: Evaluar extremos"
+          stepNum={2} title={step2Title}
           visible={activeStep >= 2}
           isCorrect={isStepCorrect[2]} isWrong={isStepWrong[2]}
           successText="¡Excelente evaluación!"
@@ -90,17 +97,17 @@ export default function ExerciseCard({
             { label: 'f(a) = ', value: stepInputs.fa, placeholder: 'f(a)', onChange: v => updateInput('fa', v, 2) },
             { label: 'f(b) = ', value: stepInputs.fb, placeholder: 'f(b)', onChange: v => updateInput('fb', v, 2) },
           ]}
-          onValidate={() => validateStep(2, answers)}
+          onValidate={() => validateStep(2, answers, methodId)}
         />
 
         <QuizStep
-          stepNum={3} title="PASO 3: Suma de puntos intermedios"
+          stepNum={3} title={step3Title}
           visible={activeStep >= 3}
           isCorrect={isStepCorrect[3]} isWrong={isStepWrong[3]}
           successText="¡Suma correcta!"
           errorText="¡Suma incorrecta! Revisa los puntos intermedios"
-          inputs={[{ label: 'Σ f(xᵢ) = ', value: stepInputs.sum, placeholder: 'Suma', onChange: v => updateInput('sum', v, 3) }]}
-          onValidate={() => validateStep(3, answers)}
+          inputs={[{ label: step3Label, value: stepInputs.sum, placeholder: 'Suma', onChange: v => updateInput('sum', v, 3) }]}
+          onValidate={() => validateStep(3, answers, methodId)}
         />
 
         <QuizStep
@@ -110,7 +117,7 @@ export default function ExerciseCard({
           successText="¡Resultado correcto!"
           errorText="¡Resultado incorrecto! Aplica la fórmula final"
           inputs={[{ label: 'I ≈ ', value: stepInputs.result, placeholder: 'Resultado', onChange: v => updateInput('result', v, 4) }]}
-          onValidate={() => validateStep(4, answers)}
+          onValidate={() => validateStep(4, answers, methodId)}
         />
       </View>
 

@@ -27,14 +27,16 @@ export const useQuizSteps = () => {
     clearWrong(stepNum);
   };
 
-  const validateStep = (stepNum: number, answers: Answers) => {
+  const validateStep = (stepNum: number, answers: Answers, methodId: string) => {
     const { h, fa, fb, sum, result } = stepInputs;
     const close = (a: string, b: number) => Math.abs(parseFloat(a) - b) < MARGIN;
+
+    const step3Answer = methodId === 'romberg' ? (answers.r11 ?? answers.sum) : answers.sum;
 
     const correct =
       stepNum === 1 ? close(h, answers.h) :
       stepNum === 2 ? close(fa, answers.fa) && close(fb, answers.fb) :
-      stepNum === 3 ? close(sum, answers.sum) :
+      stepNum === 3 ? close(sum, step3Answer) :
       stepNum === 4 ? close(result, answers.result) : false;
 
     LayoutAnimation.configureNext(LayoutAnimation.Presets.spring);

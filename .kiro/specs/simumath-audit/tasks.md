@@ -10,8 +10,8 @@ Correcciones y mejoras organizadas por prioridad: críticas (defectos que produc
 
 ### CRÍTICAS
 
-- [ ] 1. Corregir el sanitizador de expresiones
-  - [ ] 1.1 Reescribir `sanitizeExpression` en `src/hooks/utils/expressionSanitizer.ts`
+- [x] 1. Corregir el sanitizador de expresiones
+  - [x] 1.1 Reescribir `sanitizeExpression` en `src/hooks/utils/expressionSanitizer.ts`
     - Eliminar la regla global `.replace(/}/g, ')')` que destruye cualquier `}` no relacionado con potencias
     - Añadir regla específica para `e^{...}` → `exp(...)` usando el patrón `/e\^\{([^}]*)\}/g`
     - Añadir regla específica para `^{...}` → `^(...)` usando el patrón `/\^\{([^}]*)}/g`
@@ -24,13 +24,13 @@ Correcciones y mejoras organizadas por prioridad: críticas (defectos que produc
     - Verificar idempotencia: `sanitize(sanitize(expr)) === sanitize(expr)` para expresiones del teclado
     - _Requisitos: 2.3, 2.5_
 
-- [ ] 2. Añadir límite seguro de iteraciones a Romberg
-  - [ ] 2.1 Modificar `src/engine/methods/romberg.ts`
+- [x] 2. Añadir límite seguro de iteraciones a Romberg
+  - [x] 2.1 Modificar `src/engine/methods/romberg.ts`
     - Añadir constante `const MAX_ROMBERG_LEVELS = 10` al inicio del archivo
     - Reemplazar el uso directo de `maxIterations` por `const levels = Math.min(Math.max(1, maxIterations), MAX_ROMBERG_LEVELS)`
     - Usar `levels` en lugar de `maxIterations` en el bucle `for` y en el cálculo de `resultValue`
     - _Requisitos: 3.1, 3.3, 3.4_
-  - [ ] 2.2 Modificar `src/hooks/useCalculator.ts`
+  - [x] 2.2 Modificar `src/hooks/useCalculator.ts`
     - Dentro de `calculate`, después de parsear `numN`, añadir validación: si `method === 'romberg' && numN > 10`, mostrar advertencia en `error` (o como mensaje informativo) y usar `10` como valor efectivo
     - _Requisitos: 3.2_
   - [ ]* 2.3 Escribir tests unitarios para `calculateRomberg` con límite
@@ -39,7 +39,7 @@ Correcciones y mejoras organizadas por prioridad: críticas (defectos que produc
     - _Requisitos: 3.3, 3.4_
 
 - [ ] 3. Implementar soporte real de Romberg en el módulo de ejercicios
-  - [ ] 3.1 Extender la interfaz `Answers` y la función `calculateAnswers` en `src/screens/exercises/utils/exerciseMath.ts`
+  - [x] 3.1 Extender la interfaz `Answers` y la función `calculateAnswers` en `src/screens/exercises/utils/exerciseMath.ts`
     - Añadir campos opcionales a la interfaz: `r00?: number; r10?: number; r11?: number`
     - Añadir rama `romberg` en `calculateAnswers` que calcule:
       - `R[0][0]` = `(h/2) * (f(a) + f(b))` con `h = b - a` (primera aproximación, n=1)
@@ -47,7 +47,7 @@ Correcciones y mejoras organizadas por prioridad: críticas (defectos que produc
       - `R[1][1]` = `R[1][0] + (R[1][0] - R[0][0]) / 3` (primera extrapolación de Richardson)
       - `result` = `R[exercise.n - 1][exercise.n - 1]` usando el algoritmo completo de Romberg
     - _Requisitos: 4.1, 4.2, 4.4_
-  - [ ] 3.2 Adaptar `src/screens/exercises/components/ExerciseCard.tsx` para Romberg
+  - [x] 3.2 Adaptar `src/screens/exercises/components/ExerciseCard.tsx` para Romberg
     - Añadir prop `methodId: string` a la interfaz `Props`
     - Renderizar condicionalmente los títulos de los pasos según `methodId`:
       - Paso 1: "PASO 1: Primera aproximación R[0,0]" (Romberg) vs "PASO 1: Calcular h" (otros)
@@ -56,7 +56,7 @@ Correcciones y mejoras organizadas por prioridad: críticas (defectos que produc
     - Adaptar los labels de los inputs del paso 3: `R[1,1] = ` para Romberg, `Σ f(xᵢ) = ` para otros
     - Pasar `methodId` desde `TutorScreen.tsx` al renderizar `<ExerciseCard>`
     - _Requisitos: 4.3_
-  - [ ] 3.3 Adaptar la validación del paso 3 en `src/screens/exercises/hooks/useQuizSteps.ts`
+  - [x] 3.3 Adaptar la validación del paso 3 en `src/screens/exercises/hooks/useQuizSteps.ts`
     - Añadir parámetro `methodId: string` a `validateStep`
     - Para el paso 3: si `methodId === 'romberg'`, comparar `stepInputs.sum` contra `answers.r11`; en caso contrario, comparar contra `answers.sum`
     - Actualizar la llamada a `validateStep` en `ExerciseCard.tsx` para pasar `methodId`
@@ -66,28 +66,28 @@ Correcciones y mejoras organizadas por prioridad: críticas (defectos que produc
     - Verificar que `r00`, `r10` y `r11` son números finitos y no `NaN`
     - _Requisitos: 4.4_
 
-- [ ] 4. Eliminar la opacidad reducida del QuizStep activo
-  - [ ] 4.1 Modificar `src/screens/exercises/TutorScreen.styles.ts`
+- [~] 4. Eliminar la opacidad reducida del QuizStep activo
+  - [~] 4.1 Modificar `src/screens/exercises/TutorScreen.styles.ts`
     - Eliminar la propiedad `opacity: 0.5` del estilo `quizStep`
     - Verificar que `quizStepDone` mantiene `opacity: 1` (o no tiene `opacity` explícita, que equivale a 1)
     - _Requisitos: 5.1, 5.2_
 
-- [ ] 5. Punto de control — Verificar correcciones críticas
+- [~] 5. Punto de control — Verificar correcciones críticas
   - Asegurarse de que todos los tests pasan. Consultar al usuario si surgen dudas.
 
-- [ ] 6. Migrar KaTeX de CDN a recursos locales
-  - [ ] 6.1 Convertir `useLatexRenderer` a carga asíncrona en `src/components/latex/hooks/useLatexRenderer.ts`
+- [~] 6. Migrar KaTeX de CDN a recursos locales
+  - [~] 6.1 Convertir `useLatexRenderer` a carga asíncrona en `src/components/latex/hooks/useLatexRenderer.ts`
     - Añadir estado `isLoading: boolean` inicializado en `true` y `katexCss: string`, `katexJs: string`
     - Usar `useEffect` para cargar los assets una sola vez:
       - Cargar `katex.min.css` con `Asset.fromModule(require('katex/dist/katex.min.css'))` + `FileSystem.readAsStringAsync`
       - Cargar `katex.min.js` con `Asset.fromModule(require('katex/dist/katex.min.js'))` + `FileSystem.readAsStringAsync`
     - Mientras `isLoading === true`, retornar `html = ''` para que el componente muestre el fallback
     - _Requisitos: 1.1, 1.2, 1.4_
-  - [ ] 6.2 Modificar `src/components/latex/utils/katexTemplate.ts`
+  - [~] 6.2 Modificar `src/components/latex/utils/katexTemplate.ts`
     - Cambiar la firma a `generateKatexHtml(latex, fontSize, color, center, katexCss, katexJs)`
     - Reemplazar las etiquetas `<link>` y `<script src>` del CDN por `<style>${katexCss}</style>` y `<script>${katexJs}</script>` inlineados
     - _Requisitos: 1.1_
-  - [ ] 6.3 Actualizar `src/components/latex/LatexRenderer.tsx` para mostrar fallback mientras carga
+  - [~] 6.3 Actualizar `src/components/latex/LatexRenderer.tsx` para mostrar fallback mientras carga
     - Importar `Text` de `react-native`
     - Si `isLoading`, renderizar `<Text>{latex}</Text>` como fallback visible
     - Si `!isLoading`, renderizar el `WebView` con el HTML generado
@@ -97,8 +97,8 @@ Correcciones y mejoras organizadas por prioridad: críticas (defectos que produc
 
 ### IMPORTANTES
 
-- [ ] 7. Eliminar mutación de parámetros en `calculateSimpson`
-  - [ ] 7.1 Modificar `src/engine/methods/simpson.ts`
+- [~] 7. Eliminar mutación de parámetros en `calculateSimpson`
+  - [~] 7.1 Modificar `src/engine/methods/simpson.ts`
     - Reemplazar `if (n % 2 !== 0) n += 1` por `const effectiveN = n % 2 !== 0 ? n + 1 : n`
     - Sustituir todos los usos de `n` en el cuerpo de la función por `effectiveN`
     - Añadir paso informativo al inicio de `steps` cuando `effectiveN !== n`:
@@ -112,13 +112,13 @@ Correcciones y mejoras organizadas por prioridad: críticas (defectos que produc
     - Verificar que los pasos incluyen la nota de ajuste cuando `n` es impar
     - _Requisitos: 16.1, 16.2, 16.3_
 
-- [ ] 8. Unificar tokens de potencia en `CursorManager` y teclado
-  - [ ] 8.1 Modificar `src/hooks/utils/cursorManager.ts`
+- [~] 8. Unificar tokens de potencia en `CursorManager` y teclado
+  - [~] 8.1 Modificar `src/hooks/utils/cursorManager.ts`
     - Cambiar la entrada `'^'` en `INSERTION_MAP` de `{ text: '^{}', offset: 2 }` a `{ text: '^()', offset: 2 }`
     - Eliminar la entrada `'pow('` del `INSERTION_MAP`
     - Añadir `Math.max(0, Math.min(expression.length, cursorPosition + offset))` en `applyInsertion` como defensa explícita del rango del cursor
     - _Requisitos: 10.1, 10.4_
-  - [ ] 8.2 Modificar `src/components/calculator/config/keyboard.config.ts`
+  - [~] 8.2 Modificar `src/components/calculator/config/keyboard.config.ts`
     - Eliminar `'pow('` del array `MATH_KEYS`
     - Eliminar la entrada `'pow('` de `MATH_LABELS`
     - _Requisitos: 10.1, 10.3_
@@ -127,8 +127,8 @@ Correcciones y mejoras organizadas por prioridad: críticas (defectos que produc
     - Verificar que `cursorPosition` siempre está en `[0, expression.length]` tras cualquier inserción
     - _Requisitos: 10.2, 10.4_
 
-- [ ] 9. Reemplazar margen absoluto por margen relativo en la validación del Tutor
-  - [ ] 9.1 Modificar `src/screens/exercises/hooks/useQuizSteps.ts`
+- [~] 9. Reemplazar margen absoluto por margen relativo en la validación del Tutor
+  - [~] 9.1 Modificar `src/screens/exercises/hooks/useQuizSteps.ts`
     - Eliminar la constante `MARGIN = 0.01`
     - Añadir la función `isClose`:
       ```ts
@@ -148,8 +148,8 @@ Correcciones y mejoras organizadas por prioridad: críticas (defectos que produc
     - Verificar que ingresar el valor exacto de `calculateAnswers` siempre es aceptado
     - _Requisitos: 12.1, 12.2, 12.3, 12.4_
 
-- [ ] 10. Corregir dependencias del `useEffect` en `useCalculatorScreen`
-  - [ ] 10.1 Modificar `src/screens/calculator/hooks/useCalculatorScreen.ts`
+- [~] 10. Corregir dependencias del `useEffect` en `useCalculatorScreen`
+  - [~] 10.1 Modificar `src/screens/calculator/hooks/useCalculatorScreen.ts`
     - Importar `useEffect` de React
     - Mover la lógica de `loadFromRoute` inline dentro de un `useEffect` con `[routeParams]` como dependencia:
       ```ts
@@ -166,13 +166,13 @@ Correcciones y mejoras organizadas por prioridad: críticas (defectos que produc
       ```
     - Mantener `loadFromRoute` como función separada para uso manual (sin `useEffect`)
     - _Requisitos: 6.1, 6.2, 6.3_
-  - [ ] 10.2 Actualizar `src/screens/calculator/CalculatorScreen.tsx`
+  - [~] 10.2 Actualizar `src/screens/calculator/CalculatorScreen.tsx`
     - Eliminar el `useEffect(() => { loadFromRoute(route?.params); }, [route?.params])` que ya no es necesario (el efecto ahora vive en el hook)
     - Verificar que `route?.params` se sigue pasando como `routeParams` al hook
     - _Requisitos: 6.1, 6.2_
 
-- [ ] 11. Añadir tipado estricto de navegación
-  - [ ] 11.1 Añadir tipos de navegación a `src/types/index.ts`
+- [~] 11. Añadir tipado estricto de navegación
+  - [~] 11.1 Añadir tipos de navegación a `src/types/index.ts`
     - Importar `Exercise` desde `'../data/exercises/types'`
     - Exportar `RootTabParamList`:
       ```ts
@@ -187,22 +187,22 @@ Correcciones y mejoras organizadas por prioridad: críticas (defectos que produc
       export type RootStackParamList = { Main: undefined };
       ```
     - _Requisitos: 7.4_
-  - [ ] 11.2 Tipar `route` en `src/screens/calculator/CalculatorScreen.tsx`
+  - [~] 11.2 Tipar `route` en `src/screens/calculator/CalculatorScreen.tsx`
     - Importar `RouteProp` de `@react-navigation/native` y `RootTabParamList` de `src/types`
     - Reemplazar `{ route }: any` por `{ route }: { route: RouteProp<RootTabParamList, 'Calculadora'> }`
     - _Requisitos: 7.1, 7.3_
-  - [ ] 11.3 Tipar `navigation` en `src/screens/exercises/TutorScreen.tsx`
+  - [~] 11.3 Tipar `navigation` en `src/screens/exercises/TutorScreen.tsx`
     - Importar `BottomTabNavigationProp` de `@react-navigation/bottom-tabs` y `RootTabParamList` de `src/types`
     - Reemplazar `{ navigation }: any` por `{ navigation }: { navigation: BottomTabNavigationProp<RootTabParamList, 'Aprender'> }`
     - _Requisitos: 7.2, 7.3_
 
-- [ ] 12. Cargar fuentes personalizadas en la aplicación
-  - [ ] 12.1 Descargar y colocar los archivos de fuente en `assets/fonts/`
+- [~] 12. Cargar fuentes personalizadas en la aplicación
+  - [~] 12.1 Descargar y colocar los archivos de fuente en `assets/fonts/`
     - Descargar `Inter-Regular.ttf`, `Inter-Medium.ttf`, `Inter-Bold.ttf` desde Google Fonts
     - Descargar `FiraCode-Regular.ttf` desde Google Fonts
     - Colocar los cuatro archivos en `assets/fonts/`
     - _Requisitos: 8.1_
-  - [ ] 12.2 Modificar `App.tsx` para cargar fuentes con `expo-font`
+  - [~] 12.2 Modificar `App.tsx` para cargar fuentes con `expo-font`
     - Importar `useFonts` de `expo-font`
     - Añadir en el cuerpo de `App`:
       ```ts
@@ -216,15 +216,15 @@ Correcciones y mejoras organizadas por prioridad: críticas (defectos que produc
       ```
     - Si `fontError`, registrar en consola y continuar (fuentes del sistema como fallback)
     - _Requisitos: 8.1, 8.2, 8.3_
-  - [ ] 12.3 Actualizar `app.json` con la configuración del plugin `expo-font`
+  - [~] 12.3 Actualizar `app.json` con la configuración del plugin `expo-font`
     - Añadir en la sección `plugins` de `app.json`:
       ```json
       ["expo-font", { "fonts": ["./assets/fonts/Inter-Regular.ttf", "./assets/fonts/Inter-Medium.ttf", "./assets/fonts/Inter-Bold.ttf", "./assets/fonts/FiraCode-Regular.ttf"] }]
       ```
     - _Requisitos: 8.4_
 
-- [ ] 13. Añadir área sombreada al gráfico de integración
-  - [ ] 13.1 Calcular `areaPath` en `src/components/graph/hooks/useAreaGraph.ts`
+- [~] 13. Añadir área sombreada al gráfico de integración
+  - [~] 13.1 Calcular `areaPath` en `src/components/graph/hooks/useAreaGraph.ts`
     - Filtrar los puntos de la curva que estén dentro del intervalo `[a, b]`: `const areaPoints = points.filter(p => p.x >= a && p.x <= b)`
     - Construir el path SVG de área:
       ```ts
@@ -236,64 +236,64 @@ Correcciones y mejoras organizadas por prioridad: críticas (defectos que produc
       ```
     - Retornar `areaPath` junto con los demás valores del hook
     - _Requisitos: 9.1, 9.4_
-  - [ ] 13.2 Renderizar el área sombreada en `src/components/graph/AreaGraph.tsx`
+  - [~] 13.2 Renderizar el área sombreada en `src/components/graph/AreaGraph.tsx`
     - Importar `Path` de `react-native-svg` (ya importado)
     - Añadir `<Path d={areaPath} fill={theme.colors.primary} opacity={0.15} />` antes del `Path` de la curva (para que quede debajo)
     - Si `points.length === 0`, renderizar `<SvgText x={width/2} y={height/2} fill={theme.colors.error} textAnchor="middle">Error al evaluar la expresión</SvgText>` en lugar del gráfico vacío
     - _Requisitos: 9.1, 9.3, 9.4_
 
-- [ ] 14. Punto de control — Verificar correcciones importantes
+- [~] 14. Punto de control — Verificar correcciones importantes
   - Asegurarse de que todos los tests pasan. Consultar al usuario si surgen dudas.
 
 ---
 
 ### MENORES
 
-- [ ] 15. Unificar la notación de logaritmo natural
-  - [ ] 15.1 Añadir transformación `\log` → `\ln` en `src/screens/exercises/components/ExerciseCard.tsx`
+- [~] 15. Unificar la notación de logaritmo natural
+  - [~] 15.1 Añadir transformación `\log` → `\ln` en `src/screens/exercises/components/ExerciseCard.tsx`
     - En la función `getLatexExpression`, añadir `.replace(/\\log\b/g, '\\ln')` al post-procesado del `tex`, después de las transformaciones de `exp`
     - _Requisitos: 11.1, 11.2_
-  - [ ] 15.2 Actualizar descripciones en `src/data/exercises/trapecio.ts`
+  - [~] 15.2 Actualizar descripciones en `src/data/exercises/trapecio.ts`
     - En el nivel 6 (`id: 't6'`), cambiar la descripción de `"Integra f(x) = ln(x) de 1 a 5."` (ya es correcta; verificar que no diga "log(x)")
     - _Requisitos: 11.1_
-  - [ ] 15.3 Actualizar descripciones en `src/data/exercises/romberg.ts`
+  - [~] 15.3 Actualizar descripciones en `src/data/exercises/romberg.ts`
     - En el nivel 9 (`id: 'r9'`), cambiar la descripción de `"Integra x * ln(x) de 1 a 4."` (ya es correcta; verificar que no diga "log(x)")
     - _Requisitos: 11.1_
 
-- [ ] 16. Hacer `ExerciseMap` dinámico según ejercicios disponibles
-  - [ ] 16.1 Añadir prop `totalLevels` a `src/screens/exercises/components/ExerciseMap.tsx`
+- [~] 16. Hacer `ExerciseMap` dinámico según ejercicios disponibles
+  - [~] 16.1 Añadir prop `totalLevels` a `src/screens/exercises/components/ExerciseMap.tsx`
     - Extender la interfaz `Props` con `totalLevels: number`
     - Reemplazar `Array.from({ length: 10 })` por `Array.from({ length: totalLevels })`
     - _Requisitos: 15.1, 15.2, 15.3_
-  - [ ] 16.2 Pasar `totalLevels` desde `src/screens/exercises/TutorScreen.tsx`
+  - [~] 16.2 Pasar `totalLevels` desde `src/screens/exercises/TutorScreen.tsx`
     - Añadir `totalLevels={selectedMethod.data.length}` al componente `<ExerciseMap>`
     - _Requisitos: 15.1, 15.3_
 
-- [ ] 17. Usar Safe Area Insets dinámicos en las tres pantallas
-  - [ ] 17.1 Añadir constante `TAB_BAR_HEIGHT` en `src/theme/index.ts`
+- [~] 17. Usar Safe Area Insets dinámicos en las tres pantallas
+  - [~] 17.1 Añadir constante `TAB_BAR_HEIGHT` en `src/theme/index.ts`
     - Importar `Platform` de `react-native`
     - Exportar `export const TAB_BAR_HEIGHT = Platform.OS === 'ios' ? 90 : 75`
     - _Requisitos: 13.4_
-  - [ ] 17.2 Aplicar `useSafeAreaInsets` en `src/screens/calculator/CalculatorScreen.tsx`
+  - [~] 17.2 Aplicar `useSafeAreaInsets` en `src/screens/calculator/CalculatorScreen.tsx`
     - Importar `useSafeAreaInsets` de `react-native-safe-area-context` y `TAB_BAR_HEIGHT` del tema
     - Obtener `const insets = useSafeAreaInsets()`
     - Reemplazar el `paddingTop: 60` hardcodeado en `CalculatorScreen.styles.ts` por `paddingTop: insets.top + 16` calculado dinámicamente en el componente (usando `useMemo` o estilo inline)
     - Reemplazar `paddingBottom: 120` por `paddingBottom: insets.bottom + TAB_BAR_HEIGHT`
     - _Requisitos: 13.1, 13.4_
-  - [ ] 17.3 Aplicar `useSafeAreaInsets` en `src/screens/learn/TheoryScreen.tsx`
+  - [~] 17.3 Aplicar `useSafeAreaInsets` en `src/screens/learn/TheoryScreen.tsx`
     - Importar `useSafeAreaInsets` de `react-native-safe-area-context` y `TAB_BAR_HEIGHT` del tema
     - Reemplazar `paddingTop: 60` por `insets.top + 16` y `paddingBottom: 120` por `insets.bottom + TAB_BAR_HEIGHT`
     - _Requisitos: 13.2, 13.4_
-  - [ ] 17.4 Aplicar `useSafeAreaInsets` en `src/screens/exercises/TutorScreen.tsx`
+  - [~] 17.4 Aplicar `useSafeAreaInsets` en `src/screens/exercises/TutorScreen.tsx`
     - Importar `useSafeAreaInsets` de `react-native-safe-area-context` y `TAB_BAR_HEIGHT` del tema
     - Reemplazar `paddingTop: 60` del header en `TutorScreen.styles.ts` por valor dinámico calculado con `insets.top + 16`
     - _Requisitos: 13.3, 13.4_
 
-- [ ] 18. Añadir accesibilidad a componentes visuales
-  - [ ] 18.1 Añadir prop `accessibilityLabel` a `src/components/latex/LatexRenderer.types.ts`
+- [~] 18. Añadir accesibilidad a componentes visuales
+  - [~] 18.1 Añadir prop `accessibilityLabel` a `src/components/latex/LatexRenderer.types.ts`
     - Añadir `accessibilityLabel?: string` a la interfaz `LatexRendererProps`
     - _Requisitos: 14.1_
-  - [ ] 18.2 Aplicar accesibilidad en `src/components/latex/LatexRenderer.tsx`
+  - [~] 18.2 Aplicar accesibilidad en `src/components/latex/LatexRenderer.tsx`
     - Añadir `accessibilityLabel` a los props desestructurados
     - Aplicar al `View` contenedor:
       ```tsx
@@ -302,10 +302,10 @@ Correcciones y mejoras organizadas por prioridad: críticas (defectos que produc
       accessibilityLabel={accessibilityLabel ?? `Fórmula: ${latex}`}
       ```
     - _Requisitos: 14.1, 14.4_
-  - [ ] 18.3 Añadir accesibilidad al logo en `src/components/shared/BrandHeader.tsx`
+  - [~] 18.3 Añadir accesibilidad al logo en `src/components/shared/BrandHeader.tsx`
     - Añadir `accessibilityLabel="Logo de SimuMath"` al componente `<Image>`
     - _Requisitos: 14.2_
-  - [ ] 18.4 Añadir accesibilidad al contenedor de `src/components/graph/AreaGraph.tsx`
+  - [~] 18.4 Añadir accesibilidad al contenedor de `src/components/graph/AreaGraph.tsx`
     - Añadir al `View` contenedor:
       ```tsx
       accessible={true}
@@ -313,8 +313,8 @@ Correcciones y mejoras organizadas por prioridad: críticas (defectos que produc
       ```
     - _Requisitos: 14.3_
 
-- [ ] 19. Corregir conversión LaTeX con expresiones anidadas en el teclado
-  - [ ] 19.1 Refactorizar `src/components/calculator/hooks/useMathKeyboard.ts`
+- [~] 19. Corregir conversión LaTeX con expresiones anidadas en el teclado
+  - [~] 19.1 Refactorizar `src/components/calculator/hooks/useMathKeyboard.ts`
     - Importar `parse` de `mathjs`
     - Crear función `toLatex(expr: string): string`:
       - Insertar el cursor como placeholder: reemplazar la posición del cursor por `__CURSOR__` antes del parse
@@ -325,7 +325,7 @@ Correcciones y mejoras organizadas por prioridad: críticas (defectos que produc
     - Reemplazar el bloque de regex en cadena del `latex` IIFE por una llamada a `toLatex`
     - _Requisitos: 17.1, 17.2, 17.3, 17.4_
 
-- [ ] 20. Punto de control final — Verificar todas las mejoras
+- [~] 20. Punto de control final — Verificar todas las mejoras
   - Asegurarse de que todos los tests pasan y que la aplicación compila sin errores TypeScript. Consultar al usuario si surgen dudas.
 
 ---
