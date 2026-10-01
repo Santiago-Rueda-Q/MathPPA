@@ -447,8 +447,8 @@ sequenceDiagram
 ### 1. Clonar el repositorio
 
 ```bash
-git clone https://github.com/Santiago-Rueda-Q/SimuMath.git
-cd SimuMath
+git clone https://github.com/Santiago-Rueda-Q/MathPPA.git
+cd MathPPA
 ```
 
 ### 2. Instalar dependencias
